@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book list</title>
+    <style>
+        #bookList {
+            float: right;
+        }
+        #inputs {
+            float: left;
+    </style>
+    <script>
+        function addToList() {
+            var bookName = document.getElementById('bookName').value;
+            var authorName = document.getElementById('author').value;
+            var list = document.getElementById('bookList');
+            var listItems = list.getElementsByTagName('li');
+            var newItem = document.createElement('li');
+            var index = listItems.length + 1; // The new index
+            newItem.textContent = index + '- ' + bookName + ' by ' + authorName;
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                var listItem = this.parentNode;
+                listItem.parentNode.removeChild(listItem);
+                updateIndices();
+            };
+            newItem.appendChild(deleteButton);
+            list.appendChild(newItem);
+            document.getElementById('bookName').value = '';
+            document.getElementById('author').value = '';
+        }
+        function updateIndices() {
+            var list = document.getElementById('bookList');
+            var listItems = list.getElementsByTagName('li');
+            for (var i = 0; i < listItems.length; i++) {
+                var itemText = listItems[i].childNodes[0].textContent.split('- ')[1];
+                listItems[i].childNodes[0].textContent = (i + 1) + '- ' + itemText;
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>Book list</h1>
+<h3>Quan</h3>
+<div id="inputs">
+    <label for="bookName">Book name:</label>
+    <input id="bookName" placeholder="name of your book">
+    <br>
+    <label for="author">Book's author:</label>
+    <input id="author" placeholder="name of your book's author">
+    <br>
+    <button onclick="addToList()">Add to the list</button>
+</div>
+<ul id="bookList">
+</ul>
+</body>
+</html>
